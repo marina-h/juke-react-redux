@@ -16,7 +16,7 @@ import LyricsContainer from './containers/LyricsContainer';
 
 ReactDOM.render(
   <Router history={hashHistory}>
-    <Route path='/' component={AppContainer} foo={'foo'}>
+    <Route path="/" component={AppContainer} foo={'foo'}>
       <Route path="/lyrics" component={LyricsContainer} />
       <Route path="/albums" component={Albums} />
       <Route path="/albums/:albumId" component={Album} />

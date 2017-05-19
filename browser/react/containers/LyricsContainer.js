@@ -1,29 +1,72 @@
 import React, {Component} from 'react';
+import Lyrics from '../components/Lyrics';
+import axios from 'axios';
+
+import { setLyrics } from '../action-creators/lyrics';
 import store from '../store';
 
 export default class LyricsContainer extends Component {
+
 	constructor(){
 		super()
-		this.state = store.getState()
 
+		this.state = Object.assign({
+      artistQuery: '',
+      songQuery: ''
+    }, store.getState());
+
+    this.setArtist = this.setArtist.bind(this);
+    this.setSong = this.setSong.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	componentDidMount(){
-		this.unsubscribe = store.subscribe( 
-				() =>{
-					store.setState(store.getState());
-				}
-			)
-
+		this.unsubscribe = store.subscribe(() => {
+        this.setState(store.getState());
+    });
 	}
 
 	componentWillUnmount(){
 		this.unsubscribe();
 	}
 
-	render(){
-		return(
-			<h1>Just a container, more to come!</h1>
+  setArtist(artist) {
+    this.setState({  artistQuery: artist });
+  }
+
+  setSong(song) {
+    this.setState({ songQuery: song });
+  }
+
+  handleSubmit(event) {
+    console.log('this.state', this.state);
+    event.preventDefault();
+
+    if (this.state.artistQuery && this.state.songQuery) {
+      // axios.get(`/api/lyrics/${this.state.artistQuery}/${this.state.songQuery}`)
+      // .then(res => res.data)
+      // .then(data => {
+      //   const setLyricsAction = setLyrics(data.lyric);
+      //   store.dispatch(setLyricsAction);
+      // })
+      axios.get(`/api/lyrics/${this.state.artistQuery}/${this.state.songQuery}`)
+      .then(response => {
+        const setLyricsAction = setLyrics(response.data.lyric);
+        store.dispatch(setLyricsAction);
+      });
+    }
+  }
+
+	render() {
+		return (
+      <Lyrics
+        text={this.state.text}
+        setArtist={this.setArtist}
+        setSong={this.setSong}
+        handleSubmit={this.handleSubmit}
+        artistQuery={this.state.artistQuery}
+        songQuery={this.state.songQuery}
+      />
 		)
 	}
 }
