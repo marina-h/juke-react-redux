@@ -1,6 +1,8 @@
 import {
   START_PLAYING,
-  STOP_PLAYING
+  STOP_PLAYING,
+  SET_CURRENT_SONG,
+  SET_LIST
 } from '../constants';
 
 export const initialPlayerState = {
@@ -24,9 +26,16 @@ export default function (state = initialPlayerState, action) {
       newState.isPlaying = false;
       break;
 
+    case SET_CURRENT_SONG:
+      newState.currentSong = action.currentSong;
+      break;
+
+    case SET_LIST:
+      newState.currentSongList = action.currentSongList;
+      break;
+
     default:
       return state;
-
   }
 
   return newState;
