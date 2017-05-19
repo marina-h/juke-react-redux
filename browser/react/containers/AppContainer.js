@@ -12,7 +12,7 @@ import Sidebar from '../components/Sidebar';
 import Player from '../components/Player';
 
 import { convertAlbum, convertAlbums, convertSong, skip } from '../utils';
-import { startPlaying, stopPlaying, setCurrentSong, setCurrentSongList, play, pause, startSong, toggle, toggleOne, load, next, prev } from '../action-creators/player';
+import { startPlaying, stopPlaying, setCurrentSong, setCurrentSongList, setProgress, play, pause, startSong, toggle, toggleOne, load, next, prev } from '../action-creators/player';
 export default class AppContainer extends Component {
 
   constructor (props) {
@@ -92,7 +92,7 @@ export default class AppContainer extends Component {
   }
 
   setProgress (progress) {
-    this.setState({ progress: progress });
+    store.dispatch(setProgress(progress));
   }
 
   selectAlbum (albumId) {
@@ -187,6 +187,7 @@ export default class AppContainer extends Component {
       loadSongs: this.loadSongs,
       addSongToPlaylist: this.addSongToPlaylist
     });
+
     return (
       <div id="main" className="container-fluid">
         <div className="col-xs-2">

@@ -1,5 +1,7 @@
+// Lyrics
 export const SET_LYRICS = 'SET_LYRICS';
 
+// Albums
 export const RECEIVE_ALBUMS = 'RECEIVE_ALBUMS';
 export const RECEIVE_ALBUM = 'RECEIVE_ALBUM';
 
